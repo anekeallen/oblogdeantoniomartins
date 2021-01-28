@@ -3318,7 +3318,7 @@ ul.twp-social-icons li a:hover[href*=telegram]:before {
 }
 
 .twp-footer {
-  background-color: #9F111B
+  background-color: #9F111B;
   color: white;
   padding: 15px 0;
 }
