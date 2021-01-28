@@ -1,0 +1,88 @@
+.#{$prefix}-image-70{
+    height: 70px;
+}
+.#{$prefix}-image-300{
+    height: 300px;
+}
+.#{$prefix}-image-220{
+    height: 220px;
+}
+
+// 
+.#{$prefix}-image-80{
+    height: 80px;
+}
+.#{$prefix}-image-150{
+    height: 150px;
+}
+
+.#{$prefix}-image-250{
+    height: 250px;
+}
+.#{$prefix}-image-350{
+    height: 350px;
+}
+.#{$prefix}-image-380{
+    height: 380px;
+}
+.#{$prefix}-image-420{
+    height: 420px;
+}
+
+.twp-post{
+    .#{$prefix}-image-section{
+        position: relative;
+        >a{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+        .#{$prefix}-image{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+        &.#{$prefix}-image-with-content{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            flex-direction: column;
+        }
+        .#{$prefix}-unit{
+            display: block;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+        }
+     
+    }
+}
+
+.#{$prefix}-image-hover-effect{
+    overflow: hidden;
+    .#{$prefix}-image{
+        @include transition(transform,0.3s,linear);
+        @include backface();  
+    }
+    &:hover{
+        .#{$prefix}-image{
+            @include transform(scale(1.1,1.1));
+        }
+        &.#{$prefix}-overlay{
+            &:before{
+                content:none;
+            }
+        }
+
+    }
+}

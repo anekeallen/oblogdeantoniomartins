@@ -1,0 +1,29 @@
+.page-header{
+    .archive-description{
+        font-style: italic;
+        font-family: $secondary_font;
+        p{
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+    }
+    .page-title{
+        margin-top: 30px;
+        margin-bottom: 0;
+        line-height: 1;
+        padding-top: 15px;
+    }
+}
+
+.#{$prefix}-single-page-related-article-section{
+    .#{$prefix}-title{
+        margin-top: 30px;
+    }
+}
+
+.#{$prefix}-single-related-post-list{
+    @extend %reset-ul;
+    .#{$prefix}-post{
+        margin-top: 30px;
+    }
+} 

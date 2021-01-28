@@ -1,0 +1,26 @@
+.#{$prefix}-post-layout-1{
+    padding: 0;
+    margin: 0; 
+    list-style: none;
+    background-color: rgba(123,123,123,0.17);
+    .#{$prefix}-post{
+        @include border-bottom();
+        border-color: $color_light_gray;
+        padding: 15px;
+    }
+}
+
+.#{$prefix}-post-layout-2{
+    @extend %reset-ul;
+    @include border();
+    border-color: $color_light_gray;
+    padding: 0 15px;
+    .#{$prefix}-recent-feature-image-section{
+        position: relative;
+    }
+    .#{$prefix}-block-post{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+   
+}

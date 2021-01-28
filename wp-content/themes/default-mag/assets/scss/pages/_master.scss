@@ -1,0 +1,11 @@
+@import '404';
+@import 'archive';
+@import 'single';
+@import 'home/master';
+.theme-mode{
+    .fa-adjust{
+        &:before{
+            content: "\f186";
+        }
+    }
+}

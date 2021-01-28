@@ -1,0 +1,99 @@
+.night-mode{
+    body{
+        background-color: rgb(37,37,37);
+        color: $color_white;
+    }
+    .boxed-layout{
+        background-color: rgba($color_black,0.63);
+        @include border();
+        border-color: rgba($color_white,0.1);
+    }
+
+    .theme-mode{
+        .fa-adjust{
+            &:before{
+            content: "\f042";
+            }
+        }
+    }
+    
+    a{
+        color: $color_white;
+        &:visited{
+            color: $color_white;
+        }
+        &:hover{
+          color: $color_secondary;
+        }
+
+        &.#{$prefix}-default-anchor-text{
+            color: $color_black;
+            &:visited{
+                color: $color_black;
+            }
+            &:hover{
+                color: $color_secondary;
+            }
+        }
+       
+    }
+    
+    p{
+        a{
+            @extend %secondary-color;
+            &:hover{
+                @extend %primary-color;
+            }
+        }
+    }
+    .#{$prefix}-mobile-menu{
+        background-color: rgb(37,37,37);
+    }
+    .#{$prefix}-articles-list{
+        background-color: $color_black;
+    }
+    .#{$prefix}-offcanvas-sidebar-wrapper{
+        background-color: $color_black;
+        color: $color_white;
+    }
+    .#{$prefix}-logo p{
+        color: $color_white;
+    }
+    
+    .#{$prefix}-box-shadow,
+    .#{$prefix}-comments-section{
+        box-shadow:  none;
+        background-color: rgba($color_gray,0.08);
+    }
+    .widget{
+        box-shadow: none;
+        background-color: rgba($color_gray,0.08);
+    }
+    .comments-area .comment-list li .comment-content p:before,
+    .twp-comments-section .comment-list li .comment-content p:before,
+    .comments-area .comment-list li .comment-meta .comment-metadata .edit-link:before,
+    .comments-area .comment-list li .comment-meta .comment-metadata time:before,
+    .twp-comments-section .comment-list li .comment-meta .comment-metadata .edit-link:before,
+    .twp-comments-section .comment-list li .comment-meta .comment-metadata time:before{
+        color: $color_white;
+    }
+  
+    .#{$prefix}-single-page-post-section,
+    .#{$prefix}-single-author-info{
+        .post-thumbnail,
+        .wp-block-image,
+        .#{$prefix}-author-avatar{
+          img{
+              box-shadow: none;
+          }
+        }
+    }
+   
+    .twp-footer-widget{
+        .widget{
+            background-color: transparent;
+        }
+
+    }
+    
+}

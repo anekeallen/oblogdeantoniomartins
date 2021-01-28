@@ -1,0 +1,100 @@
+//Banner Section 
+.#{$prefix}-banner-main-section{
+    padding-bottom: 30px;
+    .#{$prefix}-title{
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+    .#{$prefix}-exclusive-post-list,
+    .#{$prefix}-recent-post-list,
+    .#{$prefix}-banner-article-slider{
+        margin-top: 30px;
+    }
+    .#{$prefix}-exclusive-post-list{
+        .#{$prefix}-image-section{
+            @include media(md){
+                flex: 0 0 60px;
+                max-width: 60px;
+            }
+            @include media(lg){
+                flex: 0 0 100px;
+                max-width: 100px;
+            }
+            
+        }
+        .#{$prefix}-desc{
+            @include media(md){
+                flex: 0 0 calc( 100% - 60px);
+                max-width: calc( 100% - 60px);
+            }
+            @include media(lg){
+                flex: 0 0 calc( 100% - 100px);
+                max-width: calc( 100% - 100px);
+            }
+           
+            
+        }
+    }
+  
+    .#{$prefix}-banner-article-slider{
+        .slick-dots{
+            margin-top: 15px;
+        }
+    }
+    .#{$prefix}-banner-slider-section{
+        .#{$prefix}-post-list{
+            .#{$prefix}-post{
+                margin-top: 20px;
+            }
+        } 
+    }
+  
+}
+
+// Relted Article Slider
+.#{$prefix}-related-articles-slider-section{
+    padding: 30px 0;
+    .#{$prefix}-title{
+        margin-bottom: 15px;
+        margin-left: 5px;
+        color: $color_black;
+    }
+    .#{$prefix}-post{
+        padding: 0 5px;
+        position: relative;
+        .#{$prefix}-image{
+           background-color: rgb(123,123,123);
+        }
+      
+    }
+    .slick-arrow{
+        top: 27%;
+        transform: translateY(0);
+        background-color: $color_white;
+        border-radius: 0;
+        
+        &:hover{
+            &::before{
+                border-color: $color_primary;
+            }
+        }
+
+    }
+    .slick-prev{
+        left: 5px;
+      
+    }
+    .slick-next{
+        right: 3px;
+    }
+  
+}
+// Feature category
+.#{$prefix}-featured-category-post-list{
+    padding-bottom: 30px;
+    .#{$prefix}-title,
+    .#{$prefix}-post-list{
+        margin-top: 30px;
+    }
+  
+}

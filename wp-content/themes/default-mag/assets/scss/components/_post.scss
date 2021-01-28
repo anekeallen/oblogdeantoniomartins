@@ -1,0 +1,298 @@
+$slider-height: 50px;
+.#{$prefix}-post{
+    p,
+    .#{$prefix}-post-title{
+        margin: 0;
+        padding-top: 10px;
+    }
+    .#{$prefix}-post-title{
+        a{
+            @include line-limit;
+        }
+        &.#{$prefix}-line-limit-3{
+            a{
+                @include line-limit(3);
+            }
+
+        }
+    }
+    .#{$prefix}-categories{
+        ul{
+            margin: 0; //overwrite
+            border: 0; //overwrite
+        }
+        li{
+            padding: 0; //overwrite
+            border: 0; //overwrite
+        }
+       
+        &.#{$prefix}-categories-with-bg{
+            a{
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 10px;
+            }
+        }
+    }
+    &.#{$prefix}-post-with-border{
+        @include border-top();
+        border-color: $color_light_gray;
+        padding: 15px 0;
+    }
+    .#{$prefix}-desc{
+        &.#{$prefix}-overlay-bg-black{
+            color: $color_white;
+            a{
+                color: $color_white;
+                &:visited{
+                    color: $color_white;
+                }
+                &:hover{
+                    color: $color_secondary;
+                }
+            }
+        }
+    }
+   
+}
+.#{$prefix}-post-style-1{
+    display: flex;
+    flex-wrap: wrap;    
+    .#{$prefix}-image-section{
+        flex: 0 0 100px;
+        max-width: 100px;
+    }
+    .#{$prefix}-desc{
+        flex: 0 0 calc( 100% - 100px );
+        max-width: calc( 100% - 100px );
+        padding-left: 10px;
+    }
+    .#{$prefix}-post-title{
+        padding-top: 0;
+    }
+    .#{$prefix}-categories{
+        a{
+            padding-top: 5px;
+        }
+    }
+    .#{$prefix}-categories-wrapper{
+        align-items: center;
+        .#{$prefix}-categories{
+            li{
+                padding-top: 0;
+            }
+        }
+    }
+    &.#{$prefix}-post-lg{
+        .#{$prefix}-image-section{
+            flex: 0 0 120px;
+            max-width: 120px;
+        }
+        .#{$prefix}-desc{
+            flex: 0 0 calc(100% - 120px);
+            max-width: calc(100% - 120px);
+        }
+    }
+}
+
+.#{$prefix}-post-style-2{
+    .#{$prefix}-desc{
+        z-index: 2;
+        padding: 0 10px 10px;
+        color: $color_black;
+        a{
+            color: $color_black;
+            &:visited{
+                color: $color_black;
+            }
+            &:hover{
+                color: $color_secondary;
+            }
+        }
+    }
+    
+}
+.#{$prefix}-post-style-4{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+   
+    &:first-child{
+      border-top: 0;
+    }
+    .#{$prefix}-post-title{
+        padding: 0; //overwrite
+    }
+    .#{$prefix}-unit{
+        flex: 0 0 10%;
+        max-width: 10%;
+        font-size: 25px;
+        font-weight: $font_semi_bold;
+    }
+    .#{$prefix}-desc{
+        flex: 0 0 calc(90% - 120px );
+        max-width: calc(90% - 120px ); 
+        padding: 0 10px;
+    }
+   
+    .#{$prefix}-image-section{
+        flex: 0 0 120px;
+        max-width: 120px;
+    }
+}
+.#{$prefix}-post-style-5{
+    display: flex;
+    flex-wrap: wrap;    
+    .#{$prefix}-image-section{
+        flex: 0 0 120px;
+        max-width: 120px;
+    }
+    .#{$prefix}-desc{
+        flex: 0 0 calc( 100% - 120px );
+        max-width: calc( 100% - 120px );
+        padding-left: 10px;
+    }
+}
+.#{$prefix}-archive-post{
+    .#{$prefix}-wrapper{
+        @include border();
+        border-color: $color_light_gray;
+    }
+    .#{$prefix}-image-section{
+        overflow: hidden;
+        position: relative;
+        background-color: $color_gray;
+        img{
+            @include transition(transform,0.3s,linear);
+            @include backface();
+            &:hover{
+                transform: scale(1.1,1.1);
+            }
+        }
+    }
+    .entry-header,
+    .entry-content{
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0;
+    }
+    .entry-header{
+        padding-top: 5px;
+        .entry-title{
+            margin-top: 10px;
+            margin-bottom: 0;
+            a{
+                @include line-limit(3);
+            }
+        }
+
+    }
+    .entry-content{
+        padding-bottom: 15px;
+        p{
+            margin-top: 10px;
+            margin-bottom: 0;
+    
+        }
+    }
+}
+.#{$prefix}-single-related-post{
+    .#{$prefix}-desc{
+        @include border-left();
+        @include border-right();
+        @include border-bottom();
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 10px;
+        border-color: $color_light_gray;
+    }
+    .#{$prefix}-post-title{
+        padding-top: 5px;
+    }
+}
+.#{$prefix}-author-info{
+    .#{$prefix}-image-section{
+        width: 150px;
+        margin: 0 auto;
+        border-radius: 100%;
+    }
+    .#{$prefix}-description{
+        .#{$prefix}-widget-title{
+            color: rgb(123,123,123);
+            margin-top: 15px;
+            margin-bottom: 0;
+        }
+        p{
+            margin-top: 15px;
+            margin-bottom: 0;
+            text-align: justify;
+        }
+    } 
+    .#{$prefix}-social{
+        text-align: center;
+        padding-top: 15px;
+        span{
+            margin-right: 3px;
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+    }
+}
+.#{$prefix}-ticket-pin{
+    padding: 0 7.5px;
+    @extend %clearfix;
+    height: $slider-height;
+    overflow: hidden;
+    .#{$prefix}-image-section{
+        float: left;
+        width:  80px;
+        background-color: $color_gray;
+        .data-bg{
+            height: $slider-height;
+        }
+    }
+    .#{$prefix}-title-section{
+        padding-left: 10px;
+        float: left;
+        width: calc( 100% - 80px);
+        .#{$prefix}-post-title{
+            margin: 0;
+            padding-top: 10px;
+        }
+        a{
+            @include line-limit;
+        }
+    }
+}
+.#{$prefix}-single-author-info{
+    .#{$prefix}-author-avatar,
+    .#{$prefix}-author-description{
+        margin-top: 30px;
+    }
+    .#{$prefix}-author-avatar{
+        flex: 0 0 100px;
+        max-width: 100px;
+        img{
+           box-shadow: 0 0 5px 5px rgba($color_box_shadow,0.6) ;
+           padding: 15px;
+           border-radius: 5px;
+        }
+    }
+    .#{$prefix}-author-description{
+        flex: 0 0 calc( 100% -100px);
+        max-width: calc( 100% - 100px);
+        .#{$prefix}-author-name{
+            font-size: 1.2rem;
+            font-weight: $font_bold;
+
+        }
+        .#{$prefix}-title{
+            margin-top: 0;
+        }
+        .#{$prefix}-author-email{
+            padding: 10px 0;
+            font-style: italic;
+        }
+    }
+}

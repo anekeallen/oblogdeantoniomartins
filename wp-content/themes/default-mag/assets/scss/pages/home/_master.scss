@@ -1,0 +1,8 @@
+@import 'customizer';
+@import 'widget';
+.#{$prefix}-home-static-page,
+.#{$prefix}-home-page-latest-post{
+    @include border-top();
+    border-color: $color_light_gray;
+    padding-bottom: $inner-section-gap;
+}
