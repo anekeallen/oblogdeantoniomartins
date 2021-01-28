@@ -3395,8 +3395,8 @@ ul.twp-social-icons li a:hover[href*=telegram]:before {
 }
 @media (min-width: 1050px) {
   .twp-site-branding .twp-wrapper .twp-logo {
-    /*flex: 0 0 calc( 100% - 728px);
-    max-width: calc( 100% - 728px);*/
+    flex: 0 0 calc( 100% - 728px);
+    max-width: calc( 100% - 728px);
     text-align: center;
   }
 }
