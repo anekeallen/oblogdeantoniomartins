@@ -130,14 +130,16 @@ if (default_mag_get_option('homepage_layout_option') == 'full-width') {
 						endif; ?>
 
 					</div><!--/twp-logo-->
+
+					<!--/twp-ad-->
 					<?php if (default_mag_get_option('show_addvertisement_section') == 1) { ?>
-						<div class="twp-ad">
-							<a href="<?php echo esc_url(default_mag_get_option('top_section_advertisement_url')); ?>">
-								<div class="twp-ad-image data-bg" data-background="<?php echo esc_url(default_mag_get_option('top_section_advertisement')); ?>">
+						<!--<div class="twp-ad">
+							<a href="<?php //echo esc_url(default_mag_get_option('top_section_advertisement_url')); ?>">
+								<div class="twp-ad-image data-bg" data-background="<?php //echo esc_url(default_mag_get_option('top_section_advertisement')); ?>">
 								</div>
 							</a>
-						</div><!--/twp-ad-->
-					<?php } ?>
+						</div> -->
+					<?php } ?> 
 
 				</div><!--/twp-wrapper-->
 			</div><!--/container-->

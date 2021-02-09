@@ -177,8 +177,8 @@ if ( ! function_exists( 'default_mag_custom_posts_navigation' ) ) :
                 echo '<div class="twp-pagination twp-w-100 twp-pagination-numeric">';
                     the_posts_pagination(array(
                             'mid_size' => 4,
-                            'prev_text' => __('Previous', 'default-mag'),
-                            'next_text' => __('Next', 'default-mag'),
+                            'prev_text' => __('Anterior', 'default-mag'),
+                            'next_text' => __('Próximo', 'default-mag'),
                         ));
                 echo '</div>';
             break;

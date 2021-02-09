@@ -61,7 +61,6 @@ if (!function_exists('default_mag_main_banner')) :
                             </ul>
                         </div><!--col-->
 
-
                         <?php 
                         $default_mag_select_category_for_banner_section = esc_attr(default_mag_get_option('select_category_for_slider_section'));
                         $default_mag_number_of_home_banner_section = absint(default_mag_get_option('number_of_home_slider'));

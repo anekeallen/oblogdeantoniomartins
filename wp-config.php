@@ -23,10 +23,10 @@
 define( 'DB_NAME', 'oblogd63_wp124' );
 
 /** MySQL database username */
-define( 'DB_USER', 'root' );
+define( 'DB_USER', 'oblogd63_wp124' );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', '' );
+define( 'DB_PASSWORD', 'p1]4dSxs7)' );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );

@@ -1,2 +1,2 @@
-<?php
-// Silence
+<?php
+// Silence

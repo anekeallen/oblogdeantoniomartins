@@ -6652,13 +6652,13 @@ var _propTypes = __webpack_require__(28);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _hoistNonReactStatics = __webpack_require__(402);
+var _hoistNonReactStatics = __webpack_require__(401);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _constants = __webpack_require__(405);
+var _constants = __webpack_require__(404);
 
-var _brcast = __webpack_require__(406);
+var _brcast = __webpack_require__(405);
 
 var _brcast2 = _interopRequireDefault(_brcast);
 
@@ -12325,7 +12325,7 @@ function stopPropagation(event) {
 /* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(502);
+/* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(501);
 /* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(92);
 /* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_warning__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _toolbar_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(93);
@@ -12661,7 +12661,55 @@ exports['default'] = _propTypes2['default'].oneOf([_constants.HORIZONTAL_ORIENTA
 
 
 
-var shallowEqual = __webpack_require__(401);
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /**
  * Does a shallow comparison for props and state.
@@ -16478,7 +16526,7 @@ exports['default'] = _propTypes2['default'].oneOf([_constants.INFO_POSITION_TOP,
 /* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(410);
+var freeGlobal = __webpack_require__(409);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -17265,7 +17313,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports['default'] = getCalendarDaySettings;
 
-var _getPhrase = __webpack_require__(424);
+var _getPhrase = __webpack_require__(423);
 
 var _getPhrase2 = _interopRequireDefault(_getPhrase);
 
@@ -21360,24 +21408,24 @@ function subV(v1, v2) {
     return v - v2[i];
   });
 }
-/**
- * Calculates velocity
- * @param delta the difference between current and previous vectors
- * @param delta_t the time offset
- * @param len the length of the delta vector
- * @returns velocity
+/**
+ * Calculates velocity
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time offset
+ * @param len the length of the delta vector
+ * @returns velocity
  */
 
 function calculateVelocity(delta, delta_t, len) {
   len = len || Math.hypot.apply(Math, delta);
   return delta_t ? len / delta_t : 0;
 }
-/**
- * Calculates velocities vector
- * @template T the expected vector type
- * @param delta the difference between current and previous vectors
- * @param delta_t the time offset
- * @returns velocities vector
+/**
+ * Calculates velocities vector
+ * @template T the expected vector type
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time offset
+ * @returns velocities vector
  */
 
 function calculateVelocities(delta, delta_t) {
@@ -21385,21 +21433,21 @@ function calculateVelocities(delta, delta_t) {
     return v / delta_t;
   }) : Array(delta.length).fill(0);
 }
-/**
- * Calculates distance
- * @param movement the difference between current and initial vectors
- * @returns distance
+/**
+ * Calculates distance
+ * @param movement the difference between current and initial vectors
+ * @returns distance
  */
 
 function calculateDistance(movement) {
   return Math.hypot.apply(Math, movement);
 }
-/**
- * Calculates direction
- * @template T the expected vector type
- * @param delta
- * @param len
- * @returns direction
+/**
+ * Calculates direction
+ * @template T the expected vector type
+ * @param delta
+ * @param len
+ * @returns direction
  */
 
 function calculateDirection(delta, len) {
@@ -21408,13 +21456,13 @@ function calculateDirection(delta, len) {
     return v / len;
   });
 }
-/**
- * Calculates all kinematics
- * @template T the expected vector type
- * @param movement the difference between current and initial vectors
- * @param delta the difference between current and previous vectors
- * @param delta_t the time difference between current and previous timestamps
- * @returns all kinematics
+/**
+ * Calculates all kinematics
+ * @template T the expected vector type
+ * @param movement the difference between current and initial vectors
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time difference between current and previous timestamps
+ * @returns all kinematics
  */
 
 function calculateAllKinematics(movement, delta, delta_t) {
@@ -21426,11 +21474,11 @@ function calculateAllKinematics(movement, delta, delta_t) {
     direction: calculateDirection(delta, len)
   };
 }
-/**
- * Because IE doesn't support `Math.sign` function, so we use the polyfill version of the function.
- * This polyfill function is suggested by Mozilla
- * :https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign#Polyfill
- * @param x target number
+/**
+ * Because IE doesn't support `Math.sign` function, so we use the polyfill version of the function.
+ * This polyfill function is suggested by Mozilla
+ * :https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign#Polyfill
+ * @param x target number
  */
 
 function sign(x) {
@@ -21704,9 +21752,9 @@ var setListeners = function setListeners(add) {
     });
   };
 };
-/**
- * Whether the browser supports GestureEvent (ie Safari)
- * @returns true if the browser supports gesture event
+/**
+ * Whether the browser supports GestureEvent (ie Safari)
+ * @returns true if the browser supports gesture event
  */
 
 
@@ -21721,10 +21769,10 @@ function supportsGestureEvents() {
 }
 var addListeners = /*#__PURE__*/setListeners(true);
 var removeListeners = /*#__PURE__*/setListeners(false);
-/**
- * Gets modifier keys from event
- * @param event
- * @returns modifier keys
+/**
+ * Gets modifier keys from event
+ * @param event
+ * @returns modifier keys
  */
 
 function getModifierKeys(event) {
@@ -21761,10 +21809,10 @@ function getGenericEventData(event) {
     buttons: buttons
   }, getModifierKeys(event));
 }
-/**
- * Gets scroll event values
- * @param event
- * @returns scroll event values
+/**
+ * Gets scroll event values
+ * @param event
+ * @returns scroll event values
  */
 
 function getScrollEventValues(event) {
@@ -21779,10 +21827,10 @@ function getScrollEventValues(event) {
     values: [scrollX || scrollLeft || 0, scrollY || scrollTop || 0]
   };
 }
-/**
- * Gets wheel event values.
- * @param event
- * @returns wheel event values
+/**
+ * Gets wheel event values.
+ * @param event
+ * @returns wheel event values
  */
 
 function getWheelEventValues(event) {
@@ -21794,10 +21842,10 @@ function getWheelEventValues(event) {
     values: [deltaX, deltaY]
   };
 }
-/**
- * Gets pointer event values.
- * @param event
- * @returns pointer event values
+/**
+ * Gets pointer event values.
+ * @param event
+ * @returns pointer event values
  */
 
 function getPointerEventValues(event) {
@@ -21812,10 +21860,10 @@ function getPointerEventValues(event) {
   };
 }
 var WEBKIT_DISTANCE_SCALE_FACTOR = 260;
-/**
- * Gets webkit gesture event values.
- * @param event
- * @returns webkit gesture event values
+/**
+ * Gets webkit gesture event values.
+ * @param event
+ * @returns webkit gesture event values
  */
 
 function getWebkitGestureEventValues(event) {
@@ -21823,10 +21871,10 @@ function getWebkitGestureEventValues(event) {
     values: [event.scale * WEBKIT_DISTANCE_SCALE_FACTOR, event.rotation]
   };
 }
-/**
- * Gets two touches event data
- * @param event
- * @returns two touches event data
+/**
+ * Gets two touches event data
+ * @param event
+ * @returns two touches event data
  */
 
 function getTwoTouchesEventData(event) {
@@ -21841,11 +21889,11 @@ function getTwoTouchesEventData(event) {
   };
 }
 
-/**
- * The controller will keep track of the state for all gestures and also keep
- * track of timeouts, and window listeners.
- *
- * @template BinderType the type the bind function should return
+/**
+ * The controller will keep track of the state for all gestures and also keep
+ * track of timeouts, and window listeners.
+ *
+ * @template BinderType the type the bind function should return
  */
 
 var Controller = function Controller() {
@@ -21861,8 +21909,8 @@ var Controller = function Controller() {
 
   this.bindings = {}; // an object holding the handlers associated to the gestures
 
-  /**
-   * Function ran on component unmount: cleans timeouts and removes dom listeners set by the bind function.
+  /**
+   * Function ran on component unmount: cleans timeouts and removes dom listeners set by the bind function.
    */
 
   this.clean = function () {
@@ -21873,9 +21921,9 @@ var Controller = function Controller() {
       return _this.removeWindowListeners(stateKey);
     });
   };
-  /**
-   * Function run every time the bind function is run (ie on every render).
-   * Resets the binding object and remove dom listeners attached to config.domTarget
+  /**
+   * Function run every time the bind function is run (ie on every render).
+   * Resets the binding object and remove dom listeners attached to config.domTarget
    */
 
 
@@ -21889,8 +21937,8 @@ var Controller = function Controller() {
       _this.domListeners = [];
     }
   };
-  /**
-   * Returns the domTarget element and parses a ref if needed.
+  /**
+   * Returns the domTarget element and parses a ref if needed.
    */
 
 
@@ -21898,8 +21946,8 @@ var Controller = function Controller() {
     var domTarget = _this.config.domTarget;
     return domTarget && 'current' in domTarget ? domTarget.current : domTarget;
   };
-  /**
-   * Commodity function to let recognizers simply add listeners to config.window.
+  /**
+   * Commodity function to let recognizers simply add listeners to config.window.
    */
 
 
@@ -21909,8 +21957,8 @@ var Controller = function Controller() {
     _this.windowListeners[stateKey] = listeners;
     addListeners(_this.config.window, listeners, _this.config.eventOptions);
   };
-  /**
-   * Commodity function to let recognizers simply remove listeners to config.window.
+  /**
+   * Commodity function to let recognizers simply remove listeners to config.window.
    */
 
 
@@ -21923,14 +21971,14 @@ var Controller = function Controller() {
       delete _this.windowListeners[stateKey];
     }
   };
-  /**
-   * When config.domTarget is set, this function will add dom listeners to it
+  /**
+   * When config.domTarget is set, this function will add dom listeners to it
    */
 
 
   this.addDomTargetListeners = function (target) {
-    /** We iterate on the entries of this.binding for each event, then we chain
-     * the array of functions mapped to it and push them to this.domListeners
+    /** We iterate on the entries of this.binding for each event, then we chain
+     * the array of functions mapped to it and push them to this.domListeners
      */
     Object.entries(_this.bindings).forEach(function (_ref) {
       var event = _ref[0],
@@ -21940,11 +21988,11 @@ var Controller = function Controller() {
     });
     addListeners(target, _this.domListeners, _this.config.eventOptions);
   };
-  /**
-   * this.bindings is an object which keys match ReactEventHandlerKeys.
-   * Since a recognizer might want to bind a handler function to an event key already used by a previously
-   * added recognizer, we need to make sure that each event key is an array of all the functions mapped for
-   * that key.
+  /**
+   * this.bindings is an object which keys match ReactEventHandlerKeys.
+   * Since a recognizer might want to bind a handler function to an event key already used by a previously
+   * added recognizer, we need to make sure that each event key is an array of all the functions mapped for
+   * that key.
    */
 
 
@@ -21954,9 +22002,9 @@ var Controller = function Controller() {
       if (_this.bindings[eventName]) _this.bindings[eventName].push(fn);else _this.bindings[eventName] = [fn];
     });
   };
-  /**
-   * getBindings will return an object that will be bound by users
-   * to the react component they want to interact with.
+  /**
+   * getBindings will return an object that will be bound by users
+   * to the react component they want to interact with.
    */
 
 
@@ -21987,25 +22035,25 @@ var Controller = function Controller() {
   };
 };
 
-/**
- * @private
- *
- * Utility hook called by all gesture hooks and that will be responsible for the internals.
- *
- * @param {Partial<InternalHandlers>} handlers
- * @param {RecognizerClasses} classes
- * @param {InternalConfig} config
- * @param {NativeHandlersPartial} nativeHandlers - native handlers such as onClick, onMouseDown, etc.
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @private
+ *
+ * Utility hook called by all gesture hooks and that will be responsible for the internals.
+ *
+ * @param {Partial<InternalHandlers>} handlers
+ * @param {RecognizerClasses} classes
+ * @param {InternalConfig} config
+ * @param {NativeHandlersPartial} nativeHandlers - native handlers such as onClick, onMouseDown, etc.
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useRecognizers(handlers, classes, config, nativeHandlers) {
   // The gesture controller keeping track of all gesture states
   var controller = external_this_React_default.a.useMemo(function () {
     var current = new Controller();
-    /**
-     * The bind function will create gesture recognizers and return the right
-     * bind object depending on whether `domTarget` was specified in the config object.
+    /**
+     * The bind function will create gesture recognizers and return the right
+     * bind object depending on whether `domTarget` was specified in the config object.
      */
 
     var bind = function bind() {
@@ -22049,21 +22097,21 @@ function useRecognizers(handlers, classes, config, nativeHandlers) {
   return controller.bind;
 }
 
-/**
- * @private
- * Recognizer abstract class.
- *
- * @protected
- * @abstract
- * @type {StateKey<T>} whether the Recognizer should deal with coordinates or distance / angle
+/**
+ * @private
+ * Recognizer abstract class.
+ *
+ * @protected
+ * @abstract
+ * @type {StateKey<T>} whether the Recognizer should deal with coordinates or distance / angle
  */
 
 var Recognizer = /*#__PURE__*/function () {
-  /**
-   * Creates an instance of a gesture recognizer.
-   * @param stateKey drag, move, pinch, etc.
-   * @param controller the controller attached to the gesture
-   * @param [args] the args that should be passed to the gesture handler
+  /**
+   * Creates an instance of a gesture recognizer.
+   * @param stateKey drag, move, pinch, etc.
+   * @param controller the controller attached to the gesture
+   * @param [args] the args that should be passed to the gesture handler
    */
   function Recognizer(stateKey, controller, args) {
     var _this = this;
@@ -22105,13 +22153,13 @@ var Recognizer = /*#__PURE__*/function () {
     this.removeWindowListeners = function () {
       _this.controller.removeWindowListeners(_this.stateKey);
     };
-    /**
-     * Returns the reinitialized start state for the gesture.
-     * Should be common to all gestures.
-     *
-     * @param {Vector2} values
-     * @param {UseGestureEvent} event
-     * @returns - the start state for the gesture
+    /**
+     * Returns the reinitialized start state for the gesture.
+     * Should be common to all gestures.
+     *
+     * @param {Vector2} values
+     * @param {UseGestureEvent} event
+     * @returns - the start state for the gesture
      */
 
 
@@ -22129,25 +22177,25 @@ var Recognizer = /*#__PURE__*/function () {
 
     this.rubberband = function (vector, rubberband) {
       var bounds = _this.config.bounds;
-      /**
-       * [x, y]: [rubberband(x, min, max), rubberband(y, min, max)]
+      /**
+       * [x, y]: [rubberband(x, min, max), rubberband(y, min, max)]
        */
 
       return vector.map(function (v, i) {
         return rubberbandIfOutOfBounds(v, bounds[i][0], bounds[i][1], rubberband[i]);
       });
     };
-    /**
-     * Fires the gesture handler
-     *
-     * @param {boolean} [forceFlag] - if true, then the handler will fire even if the gesture is not intentional
+    /**
+     * Fires the gesture handler
+     *
+     * @param {boolean} [forceFlag] - if true, then the handler will fire even if the gesture is not intentional
      */
 
 
     this.fireGestureHandler = function (forceFlag) {
-      /**
-       * If the gesture has been blocked (this can happen when the gesture has started in an unwanted direction),
-       * clean everything and don't do anything.
+      /**
+       * If the gesture has been blocked (this can happen when the gesture has started in an unwanted direction),
+       * clean everything and don't do anything.
        */
       if (_this.state._blocked) {
         // we need debounced gestures to end by themselves
@@ -22200,12 +22248,12 @@ var Recognizer = /*#__PURE__*/function () {
   _proto.updateGestureState = function updateGestureState(gestureState) {
     Object.assign(this.state, gestureState);
   }
-  /**
-   * Returns a generic, common payload for all gestures from an event.
-   *
-   * @param {UseGestureEvent} event
-   * @param {boolean} [isStartEvent]
-   * @returns - the generic gesture payload
+  /**
+   * Returns a generic, common payload for all gestures from an event.
+   *
+   * @param {UseGestureEvent} event
+   * @param {boolean} [isStartEvent]
+   * @returns - the generic gesture payload
    */
   ;
 
@@ -22224,11 +22272,11 @@ var Recognizer = /*#__PURE__*/function () {
       previous: values
     };
   }
-  /**
-   * Returns state properties depending on the movement and state.
-   *
-   * Should be overriden for custom behavior, doesn't do anything in the implementation
-   * below.
+  /**
+   * Returns state properties depending on the movement and state.
+   *
+   * Should be overriden for custom behavior, doesn't do anything in the implementation
+   * below.
    */
   ;
 
@@ -22238,8 +22286,8 @@ var Recognizer = /*#__PURE__*/function () {
       _blocked: false
     };
   }
-  /**
-   * Returns basic movement properties for the gesture based on the next values and current state.
+  /**
+   * Returns basic movement properties for the gesture based on the next values and current state.
    */
   ;
 
@@ -22266,8 +22314,8 @@ var Recognizer = /*#__PURE__*/function () {
     var _this$getInternalMove = this.getInternalMovement(values, state),
         _m0 = _this$getInternalMove[0],
         _m1 = _this$getInternalMove[1];
-    /**
-     * For both dimensions of the gesture, check its intentionality on each frame.
+    /**
+     * For both dimensions of the gesture, check its intentionality on each frame.
      */
 
 
@@ -22288,25 +22336,25 @@ var Recognizer = /*#__PURE__*/function () {
     var _movement = [_m0, _m1];
     if (_i0 !== false && intentional[0] === false) _initial[0] = valueFn(initial)[0];
     if (_i1 !== false && intentional[1] === false) _initial[1] = valueFn(initial)[1];
-    /**
-     * If the gesture has been blocked (from gesture specific checkIntentionality),
-     * stop right there.
+    /**
+     * If the gesture has been blocked (from gesture specific checkIntentionality),
+     * stop right there.
      */
 
     if (_blocked) return _extends(_extends({}, intentionalityCheck), {}, {
       _movement: _movement,
       delta: [0, 0]
     });
-    /**
-     * The movement sent to the handler has 0 in its dimensions when intentionality is false.
-     * It is calculated from the actual movement minus the threshold.
+    /**
+     * The movement sent to the handler has 0 in its dimensions when intentionality is false.
+     * It is calculated from the actual movement minus the threshold.
      */
 
     var movement = [_i0 !== false ? _m0 - _i0 : valueFn(initial)[0], _i1 !== false ? _m1 - _i1 : valueFn(initial)[1]];
     var offset = addV(movement, lastOffset);
-    /**
-     * Rubberband should be 0 when the gesture is no longer active, so that movement
-     * and offset can return within their bounds.
+    /**
+     * Rubberband should be 0 when the gesture is no longer active, so that movement
+     * and offset can return within their bounds.
      */
 
     var _rubberband = _active ? rubberband : [0, 0];
@@ -22356,13 +22404,13 @@ var Recognizer = /*#__PURE__*/function () {
   return Recognizer;
 }();
 
-/**
- * @private
- * Abstract class for coordinates-based gesture recongizers
- * @abstract
- * @class CoordinatesRecognizer
- * @extends {Recognizer<T>}
- * @template T
+/**
+ * @private
+ * Abstract class for coordinates-based gesture recongizers
+ * @abstract
+ * @class CoordinatesRecognizer
+ * @extends {Recognizer<T>}
+ * @template T
  */
 
 var CoordinatesRecognizer = /*#__PURE__*/function (_Recognizer) {
@@ -22374,20 +22422,20 @@ var CoordinatesRecognizer = /*#__PURE__*/function (_Recognizer) {
 
   var _proto = CoordinatesRecognizer.prototype;
 
-  /**
-   * Returns the real movement (without taking intentionality into acount)
+  /**
+   * Returns the real movement (without taking intentionality into acount)
    */
   _proto.getInternalMovement = function getInternalMovement(values, state) {
     return subV(values, state.initial);
   }
-  /**
-   * In coordinates-based gesture, this function will detect the first intentional axis,
-   * lock the gesture axis if lockDirection is specified in the config, block the gesture
-   * if the first intentional axis doesn't match the specified axis in config.
-   *
-   * @param {[FalseOrNumber, FalseOrNumber]} _intentional
-   * @param {Vector2} _movement
-   * @param {PartialGestureState<T>} state
+  /**
+   * In coordinates-based gesture, this function will detect the first intentional axis,
+   * lock the gesture axis if lockDirection is specified in the config, block the gesture
+   * if the first intentional axis doesn't match the specified axis in config.
+   *
+   * @param {[FalseOrNumber, FalseOrNumber]} _intentional
+   * @param {Vector2} _movement
+   * @param {PartialGestureState<T>} state
    */
   ;
 
@@ -22480,8 +22528,8 @@ var DragRecognizer = /*#__PURE__*/function (_CoordinatesRecognize) {
           touches = _getGenericEventData.touches;
 
       var _lastEventType = _this.state._lastEventType;
-      /**
-       * This tries to filter out mouse events triggered by touch screens
+      /**
+       * This tries to filter out mouse events triggered by touch screens
        * */
       // If the previous gesture was touch-based, and the current one is mouse based,
       // this means that we might be dealing with mouse simulated events if they're close to
@@ -22701,13 +22749,13 @@ var defaultCoordinatesOptions = {
   axis: undefined,
   bounds: undefined
 };
-/**
- * @private
- *
- * Returns the internal generic option object.
- *
- * @param {Partial<GenericOptions>} [config={}]
- * @returns {InternalGenericOptions}
+/**
+ * @private
+ *
+ * Returns the internal generic option object.
+ *
+ * @param {Partial<GenericOptions>} [config={}]
+ * @returns {InternalGenericOptions}
  */
 
 function getInternalGenericOptions(config) {
@@ -22848,14 +22896,14 @@ function getInternalDragOptions(dragConfig) {
   });
 }
 
-/**
- * @public
- *
- * Drag hook.
- *
- * @param {Handler<'drag'>} handler - the function fired every time the drag gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and drag options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Drag hook.
+ *
+ * @param {Handler<'drag'>} handler - the function fired every time the drag gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and drag options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useDrag(handler, config) {
@@ -22868,9 +22916,9 @@ function useDrag(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       drag = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -22887,13 +22935,13 @@ function useDrag(handler, config) {
   }, [DragRecognizer], mergedConfig);
 }
 
-/**
- * @private
- * Abstract class for distance/angle-based gesture recongizers
- * @abstract
- * @class DistanceAngleRecognizer
- * @extends {Recognizer<T>}
- * @template T
+/**
+ * @private
+ * Abstract class for distance/angle-based gesture recongizers
+ * @abstract
+ * @class DistanceAngleRecognizer
+ * @extends {Recognizer<T>}
+ * @template T
  */
 
 var DistanceAngleRecognizer = /*#__PURE__*/function (_Recognizer) {
@@ -22905,8 +22953,8 @@ var DistanceAngleRecognizer = /*#__PURE__*/function (_Recognizer) {
 
   var _proto = DistanceAngleRecognizer.prototype;
 
-  /**
-   * Returns the real movement (without taking intentionality into acount)
+  /**
+   * Returns the real movement (without taking intentionality into acount)
    */
   _proto.getInternalMovement = function getInternalMovement(_ref, state) {
     var d = _ref[0],
@@ -22918,10 +22966,10 @@ var DistanceAngleRecognizer = /*#__PURE__*/function (_Recognizer) {
 
     a = a !== void 0 ? a : da[1];
     var delta_a = a - da[1];
-    /**
-     * The angle value might jump from 179deg to -179deg when we actually want to
-     * read 181deg to ensure continuity. To make that happen, we detect when the jump
-     * is supsiciously high (ie > 270deg) and increase the `turns` value
+    /**
+     * The angle value might jump from 179deg to -179deg when we actually want to
+     * read 181deg to ensure continuity. To make that happen, we detect when the jump
+     * is supsiciously high (ie > 270deg) and increase the `turns` value
      */
 
     var newTurns = Math.abs(delta_a) > 270 ? turns + sign(delta_a) : turns; // we update the angle difference to its corrected value
@@ -23055,8 +23103,8 @@ var PinchRecognizer = /*#__PURE__*/function (_DistanceAngleRecogni) {
         return _this.fireGestureHandler();
       });
     };
-    /**
-     * PINCH WITH WEBKIT GESTURES
+    /**
+     * PINCH WITH WEBKIT GESTURES
      */
 
 
@@ -23129,8 +23177,8 @@ var PinchRecognizer = /*#__PURE__*/function (_DistanceAngleRecogni) {
 
       _this.state.origin = origin;
     };
-    /**
-     * PINCH WITH WHEEL
+    /**
+     * PINCH WITH WHEEL
      */
 
 
@@ -23242,14 +23290,14 @@ var PinchRecognizer = /*#__PURE__*/function (_DistanceAngleRecogni) {
   return PinchRecognizer;
 }(DistanceAngleRecognizer);
 
-/**
- * @public
- *
- * Pinch hook.
- *
- * @param {Handler<'pinch'>} handler - the function fired every time the pinch gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and pinch options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Pinch hook.
+ *
+ * @param {Handler<'pinch'>} handler - the function fired every time the pinch gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and pinch options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function usePinch(handler, config) {
@@ -23262,9 +23310,9 @@ function usePinch(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       pinch = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -23377,14 +23425,14 @@ var WheelRecognizer = /*#__PURE__*/function (_CoordinatesRecognize) {
   return WheelRecognizer;
 }(CoordinatesRecognizer);
 
-/**
- * @public
- *
- * Wheel hook.
- *
- * @param {Handler<'wheel'>} handler - the function fired every time the wheel gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and wheel options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Wheel hook.
+ *
+ * @param {Handler<'wheel'>} handler - the function fired every time the wheel gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and wheel options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useWheel(handler, config) {
@@ -23397,9 +23445,9 @@ function useWheel(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       wheel = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -23546,14 +23594,14 @@ var MoveRecognizer = /*#__PURE__*/function (_CoordinatesRecognize) {
   return MoveRecognizer;
 }(CoordinatesRecognizer);
 
-/**
- * @public
- *
- * Move hook.
- *
- * @param {Handler<'move'>} handler - the function fired every time the move gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and move options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Move hook.
+ *
+ * @param {Handler<'move'>} handler - the function fired every time the move gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and move options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useMove(handler, config) {
@@ -23566,9 +23614,9 @@ function useMove(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       move = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -23585,14 +23633,14 @@ function useMove(handler, config) {
   }, [MoveRecognizer], mergedConfig);
 }
 
-/**
- * @public
- *
- * Hover hook.
- *
- * @param {Handler<'hover'>} handler - the function fired every time the hover gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and hover options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Hover hook.
+ *
+ * @param {Handler<'hover'>} handler - the function fired every time the hover gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and hover options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useHover(handler, config) {
@@ -23605,9 +23653,9 @@ function useHover(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       hover = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -23710,14 +23758,14 @@ var ScrollRecognizer = /*#__PURE__*/function (_CoordinatesRecognize) {
   return ScrollRecognizer;
 }(CoordinatesRecognizer);
 
-/**
- * @public
- *
- * Scroll hook.
- *
- * @param {Handler<'scroll'>} handler - the function fired every time the scroll gesture updates
- * @param {(Config | {})} [config={}] - the config object including generic options and scroll options
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * Scroll hook.
+ *
+ * @param {Handler<'scroll'>} handler - the function fired every time the scroll gesture updates
+ * @param {(Config | {})} [config={}] - the config object including generic options and scroll options
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useScroll(handler, config) {
@@ -23730,9 +23778,9 @@ function useScroll(handler, config) {
       eventOptions = _config.eventOptions,
       window = _config.window,
       scroll = _objectWithoutPropertiesLoose(_config, ["domTarget", "eventOptions", "window"]);
-  /**
-   * TODO: at the moment we recompute the config object at every render
-   * this could probably be optimized
+  /**
+   * TODO: at the moment we recompute the config object at every render
+   * this could probably be optimized
    */
 
 
@@ -23749,14 +23797,14 @@ function useScroll(handler, config) {
   }, [ScrollRecognizer], mergedConfig);
 }
 
-/**
- * @public
- *
- * The most complete gesture hook, allowing support for multiple gestures.
- *
- * @param {UserHandlersPartial} handlers - an object with on[Gesture] keys containg gesture handlers
- * @param {UseGestureConfig} [config={}] - the full config object
- * @returns {(...args: any[]) => HookReturnType<Config>}
+/**
+ * @public
+ *
+ * The most complete gesture hook, allowing support for multiple gestures.
+ *
+ * @param {UserHandlersPartial} handlers - an object with on[Gesture] keys containg gesture handlers
+ * @param {UseGestureConfig} [config={}] - the full config object
+ * @returns {(...args: any[]) => HookReturnType<Config>}
  */
 
 function useGesture(handlers, config) {
@@ -23764,9 +23812,9 @@ function useGesture(handlers, config) {
     config = {};
   }
 
-  /**
-   * If handlers contains {onDragStart, onDrag, onDragEnd, onMoveStart, onMove}
-   * actions will include 'onDrag' and 'onMove.
+  /**
+   * If handlers contains {onDragStart, onDrag, onDragEnd, onMoveStart, onMove}
+   * actions will include 'onDrag' and 'onMove.
    */
   var _React$useState = external_this_React_default.a.useState(function () {
     return new Set(Object.keys(handlers).map(function (k) {
@@ -23774,10 +23822,10 @@ function useGesture(handlers, config) {
     }));
   }),
       actions = _React$useState[0];
-  /**
-   * Here we compute the derived internal config based on the provided config object.
-   * We decompose the config into its generic and gesture options and compute each.
-   * TODO: this is currently done on every render!
+  /**
+   * Here we compute the derived internal config based on the provided config object.
+   * We decompose the config into its generic and gesture options and compute each.
+   * TODO: this is currently done on every render!
    */
 
 
@@ -23837,15 +23885,15 @@ function useGesture(handlers, config) {
 
   return useRecognizers(internalHandlers, classes, mergedConfig, _nativeHandlers);
 }
-/**
- * @private
- *
- * This utility function will integrate start and end handlers into the regular
- * handler function by using first and last conditions.
- *
- * @param {UserHandlersPartial} handlers - the handlers function object
- * @param {HandlerKey} handlerKey - the key for which to integrate start and end handlers
- * @returns
+/**
+ * @private
+ *
+ * This utility function will integrate start and end handlers into the regular
+ * handler function by using first and last conditions.
+ *
+ * @param {UserHandlersPartial} handlers - the handlers function object
+ * @param {HandlerKey} handlerKey - the key for which to integrate start and end handlers
+ * @returns
  */
 
 function includeStartEndHandlers(handlers, handlerKey, _nativeHandlers) {
@@ -26107,6 +26155,7 @@ function useControlledState(currentState) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26257,6 +26306,7 @@ function UnitControl(_ref, ref) {
   };
 
   var inputSuffix = !disableUnits ? Object(external_this_wp_element_["createElement"])(UnitSelectControl, {
+    "aria-label": Object(external_this_wp_i18n_["__"])('Select unit'),
     disabled: disabled,
     isTabbable: isUnitSelectTabbable,
     options: units,
@@ -26434,11 +26484,10 @@ function BoxUnitControl(_ref) {
       onHoverOff(event, state);
     }
   });
-  return Object(external_this_wp_element_["createElement"])(UnitControlWrapper, Object(esm_extends["a" /* default */])({
-    "aria-label": label
-  }, bindHoverGesture()), Object(external_this_wp_element_["createElement"])(Tooltip, {
+  return Object(external_this_wp_element_["createElement"])(UnitControlWrapper, bindHoverGesture(), Object(external_this_wp_element_["createElement"])(Tooltip, {
     text: label
   }, Object(external_this_wp_element_["createElement"])(box_control_styles_UnitControl, Object(esm_extends["a" /* default */])({
+    "aria-label": label,
     className: "component-box-control__unit-control",
     hideHTMLArrows: true,
     isFirst: isFirst,
@@ -26951,16 +27000,17 @@ function LinkedButton(_ref) {
   var isLinked = _ref.isLinked,
       props = Object(objectWithoutProperties["a" /* default */])(_ref, ["isLinked"]);
 
-  var linkedTooltipText = isLinked ? Object(external_this_wp_i18n_["__"])('Unlink Sides') : Object(external_this_wp_i18n_["__"])('Link Sides');
+  var label = isLinked ? Object(external_this_wp_i18n_["__"])('Unlink Sides') : Object(external_this_wp_i18n_["__"])('Link Sides');
   return Object(external_this_wp_element_["createElement"])(build_module_tooltip["a" /* default */], {
-    text: linkedTooltipText
+    text: label
   }, Object(external_this_wp_element_["createElement"])("span", null, Object(external_this_wp_element_["createElement"])(build_module_button["a" /* default */], Object(esm_extends["a" /* default */])({}, props, {
     className: "component-box-control__linked-button",
     isPrimary: isLinked,
     isSecondary: !isLinked,
     isSmall: true,
     icon: isLinked ? library_link["a" /* default */] : link_off["a" /* default */],
-    iconSize: 16
+    iconSize: 16,
+    "aria-label": label
   }))));
 }
 
@@ -27190,6 +27240,7 @@ function useSideAnimation(value) {
 
 
 
+
 function box_control_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function box_control_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { box_control_ownKeys(Object(source), true).forEach(function (key) { Object(defineProperty["a" /* default */])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { box_control_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -27332,7 +27383,9 @@ function BoxControl(_ref) {
     className: "component-box-control__header-control-wrapper"
   }, Object(external_this_wp_element_["createElement"])(flex_item, null, Object(external_this_wp_element_["createElement"])(BoxControlIcon, {
     side: side
-  })), isLinked && Object(external_this_wp_element_["createElement"])(block, null, Object(external_this_wp_element_["createElement"])(AllInputControl, inputControlProps)), Object(external_this_wp_element_["createElement"])(flex_item, null, Object(external_this_wp_element_["createElement"])(LinkedButton, {
+  })), isLinked && Object(external_this_wp_element_["createElement"])(block, null, Object(external_this_wp_element_["createElement"])(AllInputControl, Object(esm_extends["a" /* default */])({
+    "aria-label": label
+  }, inputControlProps))), Object(external_this_wp_element_["createElement"])(flex_item, null, Object(external_this_wp_element_["createElement"])(LinkedButton, {
     onClick: toggleLinked,
     isLinked: isLinked
   }))), !isLinked && Object(external_this_wp_element_["createElement"])(BoxInputControls, inputControlProps));
@@ -37063,7 +37116,7 @@ function DropdownMenu(_ref) {
 /* harmony default export */ var dropdown_menu = (DropdownMenu);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/icons/build-module/library/external.js
-var external = __webpack_require__(441);
+var external = __webpack_require__(440);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/build-module/external-link/styles/external-link-styles.js
 
@@ -38046,7 +38099,7 @@ var focusable_iframe_FocusableIframe = /*#__PURE__*/function (_Component) {
 })(focusable_iframe_FocusableIframe));
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/icons/build-module/library/text-color.js
-var text_color = __webpack_require__(442);
+var text_color = __webpack_require__(441);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/build-module/range-control/utils.js
 
@@ -39054,6 +39107,7 @@ var range_control_ForwardedComponent = Object(external_this_wp_element_["forward
 
 var DEFAULT_FONT_SIZE = 'default';
 var CUSTOM_FONT_SIZE = 'custom';
+var MAX_FONT_SIZE_DISPLAY = '25px';
 
 function getSelectValueFromFontSize(fontSizes, value) {
   if (value) {
@@ -39082,8 +39136,9 @@ function getSelectOptions(optionsArray, disableCustomFontSizes) {
     return {
       key: option.slug,
       name: option.name,
+      size: option.size,
       style: {
-        fontSize: option.size
+        fontSize: "min( ".concat(option.size, ", ").concat(MAX_FONT_SIZE_DISPLAY, " )")
       }
     };
   });
@@ -52806,7 +52861,7 @@ var _moment = __webpack_require__(44);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _throttle = __webpack_require__(407);
+var _throttle = __webpack_require__(406);
 
 var _throttle2 = _interopRequireDefault(_throttle);
 
@@ -52814,7 +52869,7 @@ var _isTouchDevice = __webpack_require__(251);
 
 var _isTouchDevice2 = _interopRequireDefault(_isTouchDevice);
 
-var _reactOutsideClickHandler = __webpack_require__(417);
+var _reactOutsideClickHandler = __webpack_require__(416);
 
 var _reactOutsideClickHandler2 = _interopRequireDefault(_reactOutsideClickHandler);
 
@@ -52824,19 +52879,19 @@ var _getPhrasePropTypes = __webpack_require__(113);
 
 var _getPhrasePropTypes2 = _interopRequireDefault(_getPhrasePropTypes);
 
-var _CalendarMonthGrid = __webpack_require__(421);
+var _CalendarMonthGrid = __webpack_require__(420);
 
 var _CalendarMonthGrid2 = _interopRequireDefault(_CalendarMonthGrid);
 
-var _DayPickerNavigation = __webpack_require__(431);
+var _DayPickerNavigation = __webpack_require__(430);
 
 var _DayPickerNavigation2 = _interopRequireDefault(_DayPickerNavigation);
 
-var _DayPickerKeyboardShortcuts = __webpack_require__(436);
+var _DayPickerKeyboardShortcuts = __webpack_require__(435);
 
 var _DayPickerKeyboardShortcuts2 = _interopRequireDefault(_DayPickerKeyboardShortcuts);
 
-var _getNumberOfCalendarMonthWeeks = __webpack_require__(439);
+var _getNumberOfCalendarMonthWeeks = __webpack_require__(438);
 
 var _getNumberOfCalendarMonthWeeks2 = _interopRequireDefault(_getNumberOfCalendarMonthWeeks);
 
@@ -52848,7 +52903,7 @@ var _calculateDimension = __webpack_require__(265);
 
 var _calculateDimension2 = _interopRequireDefault(_calculateDimension);
 
-var _getActiveElement = __webpack_require__(440);
+var _getActiveElement = __webpack_require__(439);
 
 var _getActiveElement2 = _interopRequireDefault(_getActiveElement);
 
@@ -54353,80 +54408,9 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref2) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
 
 
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
-
-/***/ }),
-/* 402 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var reactIs = __webpack_require__(403);
+var reactIs = __webpack_require__(402);
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -54530,19 +54514,19 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 403 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(404);
+  module.exports = __webpack_require__(403);
 } else {}
 
 
 /***/ }),
-/* 404 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54564,7 +54548,7 @@ exports.isSuspense=function(a){return t(a)===p};
 
 
 /***/ }),
-/* 405 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54581,7 +54565,7 @@ var DIRECTIONS = exports.DIRECTIONS = {
 };
 
 /***/ }),
-/* 406 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54604,10 +54588,10 @@ exports['default'] = _propTypes2['default'].shape({
 });
 
 /***/ }),
-/* 407 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var debounce = __webpack_require__(408),
+var debounce = __webpack_require__(407),
     isObject = __webpack_require__(197);
 
 /** Error message constants. */
@@ -54679,12 +54663,12 @@ module.exports = throttle;
 
 
 /***/ }),
-/* 408 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(197),
-    now = __webpack_require__(409),
-    toNumber = __webpack_require__(411);
+    now = __webpack_require__(408),
+    toNumber = __webpack_require__(410);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -54876,7 +54860,7 @@ module.exports = debounce;
 
 
 /***/ }),
-/* 409 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(258);
@@ -54905,7 +54889,7 @@ module.exports = now;
 
 
 /***/ }),
-/* 410 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -54916,11 +54900,11 @@ module.exports = freeGlobal;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(121)))
 
 /***/ }),
-/* 411 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(197),
-    isSymbol = __webpack_require__(412);
+    isSymbol = __webpack_require__(411);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -54988,11 +54972,11 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 412 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(413),
-    isObjectLike = __webpack_require__(416);
+var baseGetTag = __webpack_require__(412),
+    isObjectLike = __webpack_require__(415);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -55023,12 +55007,12 @@ module.exports = isSymbol;
 
 
 /***/ }),
-/* 413 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(259),
-    getRawTag = __webpack_require__(414),
-    objectToString = __webpack_require__(415);
+    getRawTag = __webpack_require__(413),
+    objectToString = __webpack_require__(414);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -55057,7 +55041,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 414 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(259);
@@ -55109,7 +55093,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 415 */
+/* 414 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -55137,7 +55121,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 416 */
+/* 415 */
 /***/ (function(module, exports) {
 
 /**
@@ -55172,15 +55156,15 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 417 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // eslint-disable-next-line import/no-unresolved
-module.exports = __webpack_require__(418);
+module.exports = __webpack_require__(417);
 
 
 /***/ }),
-/* 418 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55208,7 +55192,7 @@ var _object = __webpack_require__(241);
 
 var _object2 = _interopRequireDefault(_object);
 
-var _document = __webpack_require__(419);
+var _document = __webpack_require__(418);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -55418,7 +55402,7 @@ OutsideClickHandler.propTypes = propTypes;
 OutsideClickHandler.defaultProps = defaultProps;
 
 /***/ }),
-/* 419 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55429,7 +55413,7 @@ var define = __webpack_require__(104);
 var implementation = __webpack_require__(261);
 var getPolyfill = __webpack_require__(262);
 var polyfill = getPolyfill();
-var shim = __webpack_require__(420);
+var shim = __webpack_require__(419);
 
 var boundContains = function contains(node, other) {
 	return polyfill.apply(node, [other]);
@@ -55445,7 +55429,7 @@ module.exports = boundContains;
 
 
 /***/ }),
-/* 420 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55475,7 +55459,7 @@ module.exports = function shimContains() {
 
 
 /***/ }),
-/* 421 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55525,15 +55509,15 @@ var _getPhrasePropTypes = __webpack_require__(113);
 
 var _getPhrasePropTypes2 = _interopRequireDefault(_getPhrasePropTypes);
 
-var _CalendarMonth = __webpack_require__(422);
+var _CalendarMonth = __webpack_require__(421);
 
 var _CalendarMonth2 = _interopRequireDefault(_CalendarMonth);
 
-var _isTransitionEndSupported = __webpack_require__(427);
+var _isTransitionEndSupported = __webpack_require__(426);
 
 var _isTransitionEndSupported2 = _interopRequireDefault(_isTransitionEndSupported);
 
-var _getTransformStyles = __webpack_require__(428);
+var _getTransformStyles = __webpack_require__(427);
 
 var _getTransformStyles2 = _interopRequireDefault(_getTransformStyles);
 
@@ -55545,11 +55529,11 @@ var _toISOMonthString = __webpack_require__(196);
 
 var _toISOMonthString2 = _interopRequireDefault(_toISOMonthString);
 
-var _isPrevMonth = __webpack_require__(429);
+var _isPrevMonth = __webpack_require__(428);
 
 var _isPrevMonth2 = _interopRequireDefault(_isPrevMonth);
 
-var _isNextMonth = __webpack_require__(430);
+var _isNextMonth = __webpack_require__(429);
 
 var _isNextMonth2 = _interopRequireDefault(_isNextMonth);
 
@@ -56041,7 +56025,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref) {
 })(CalendarMonthGrid);
 
 /***/ }),
-/* 422 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56089,7 +56073,7 @@ var _getPhrasePropTypes = __webpack_require__(113);
 
 var _getPhrasePropTypes2 = _interopRequireDefault(_getPhrasePropTypes);
 
-var _CalendarWeek = __webpack_require__(423);
+var _CalendarWeek = __webpack_require__(422);
 
 var _CalendarWeek2 = _interopRequireDefault(_CalendarWeek);
 
@@ -56101,7 +56085,7 @@ var _calculateDimension = __webpack_require__(265);
 
 var _calculateDimension2 = _interopRequireDefault(_calculateDimension);
 
-var _getCalendarMonthWeeks = __webpack_require__(426);
+var _getCalendarMonthWeeks = __webpack_require__(425);
 
 var _getCalendarMonthWeeks2 = _interopRequireDefault(_getCalendarMonthWeeks);
 
@@ -56446,7 +56430,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref) {
 })(CalendarMonth);
 
 /***/ }),
-/* 423 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56467,7 +56451,7 @@ var _CalendarDay = __webpack_require__(263);
 
 var _CalendarDay2 = _interopRequireDefault(_CalendarDay);
 
-var _CustomizableCalendarDay = __webpack_require__(425);
+var _CustomizableCalendarDay = __webpack_require__(424);
 
 var _CustomizableCalendarDay2 = _interopRequireDefault(_CustomizableCalendarDay);
 
@@ -56490,7 +56474,7 @@ function CalendarWeek(_ref) {
 CalendarWeek.propTypes = propTypes;
 
 /***/ }),
-/* 424 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56511,7 +56495,7 @@ function getPhrase(phrase, args) {
 }
 
 /***/ }),
-/* 425 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57021,7 +57005,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref2) {
 })(CustomizableCalendarDay);
 
 /***/ }),
-/* 426 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57085,7 +57069,7 @@ function getCalendarMonthWeeks(month, enableOutsideDays) {
 }
 
 /***/ }),
-/* 427 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57100,7 +57084,7 @@ function isTransitionEndSupported() {
 }
 
 /***/ }),
-/* 428 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57120,7 +57104,7 @@ function getTransformStyles(transformValue) {
 }
 
 /***/ }),
-/* 429 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57147,7 +57131,7 @@ function isPrevMonth(a, b) {
 }
 
 /***/ }),
-/* 430 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57174,7 +57158,7 @@ function isNextMonth(a, b) {
 }
 
 /***/ }),
-/* 431 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57208,19 +57192,19 @@ var _getPhrasePropTypes = __webpack_require__(113);
 
 var _getPhrasePropTypes2 = _interopRequireDefault(_getPhrasePropTypes);
 
-var _LeftArrow = __webpack_require__(432);
+var _LeftArrow = __webpack_require__(431);
 
 var _LeftArrow2 = _interopRequireDefault(_LeftArrow);
 
-var _RightArrow = __webpack_require__(433);
+var _RightArrow = __webpack_require__(432);
 
 var _RightArrow2 = _interopRequireDefault(_RightArrow);
 
-var _ChevronUp = __webpack_require__(434);
+var _ChevronUp = __webpack_require__(433);
 
 var _ChevronUp2 = _interopRequireDefault(_ChevronUp);
 
-var _ChevronDown = __webpack_require__(435);
+var _ChevronDown = __webpack_require__(434);
 
 var _ChevronDown2 = _interopRequireDefault(_ChevronDown);
 
@@ -57483,7 +57467,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref2) {
 })(DayPickerNavigation);
 
 /***/ }),
-/* 432 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57519,7 +57503,7 @@ LeftArrow.defaultProps = {
 exports['default'] = LeftArrow;
 
 /***/ }),
-/* 433 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57555,7 +57539,7 @@ RightArrow.defaultProps = {
 exports['default'] = RightArrow;
 
 /***/ }),
-/* 434 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57591,7 +57575,7 @@ ChevronUp.defaultProps = {
 exports['default'] = ChevronUp;
 
 /***/ }),
-/* 435 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57627,7 +57611,7 @@ ChevronDown.defaultProps = {
 exports['default'] = ChevronDown;
 
 /***/ }),
-/* 436 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57664,11 +57648,11 @@ var _getPhrasePropTypes = __webpack_require__(113);
 
 var _getPhrasePropTypes2 = _interopRequireDefault(_getPhrasePropTypes);
 
-var _KeyboardShortcutRow = __webpack_require__(437);
+var _KeyboardShortcutRow = __webpack_require__(436);
 
 var _KeyboardShortcutRow2 = _interopRequireDefault(_KeyboardShortcutRow);
 
-var _CloseButton = __webpack_require__(438);
+var _CloseButton = __webpack_require__(437);
 
 var _CloseButton2 = _interopRequireDefault(_CloseButton);
 
@@ -58136,7 +58120,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref3) {
 })(DayPickerKeyboardShortcuts);
 
 /***/ }),
-/* 437 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58251,7 +58235,7 @@ exports['default'] = (0, _reactWithStyles.withStyles)(function (_ref2) {
 })(KeyboardShortcutRow);
 
 /***/ }),
-/* 438 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58288,7 +58272,7 @@ CloseButton.defaultProps = {
 exports['default'] = CloseButton;
 
 /***/ }),
-/* 439 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58319,7 +58303,7 @@ function getNumberOfCalendarMonthWeeks(month) {
 }
 
 /***/ }),
-/* 440 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58334,7 +58318,7 @@ function getActiveElement() {
 }
 
 /***/ }),
-/* 441 */
+/* 440 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58358,7 +58342,7 @@ var external = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createEle
 
 
 /***/ }),
-/* 442 */
+/* 441 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58382,6 +58366,7 @@ var textColor = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createEl
 
 
 /***/ }),
+/* 442 */,
 /* 443 */,
 /* 444 */,
 /* 445 */,
@@ -58440,8 +58425,7 @@ var textColor = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createEl
 /* 498 */,
 /* 499 */,
 /* 500 */,
-/* 501 */,
-/* 502 */
+/* 501 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
